@@ -14,7 +14,9 @@ $(document).ready(function () {
 				var statusList = '<ul class="status-list">';
 
 				res.data.map(function (status) {
-					statusList += '<li><h3>'+ status.content +'</h3>'+ '<a>'+ status.username +'</a></li>';
+					var deleteButton = '<a href="#" class="status-delete" data-id="'+ status._id +'">Delete</a>'
+					var likeButton = '<a href="#" class="status-like" data-id="'+ status._id +'">Like</a>'
+					statusList += '<li><h3>'+ status.content +' <span class="status-likes-count">Likes: '+ status.likes_count+'</span></h3>'+ '<a>'+ status.username +'</a>'+ deleteButton + likeButton +'</li>';
 				});
 
 				statusList += '</ul>';
@@ -25,6 +27,22 @@ $(document).ready(function () {
 	};
 
 	getStatuses();
+
+	$('#status_container').on('click', '.status-like', function (e) {
+		var $el = $(this),
+			_id = $el.attr('data-id');
+
+		$.ajax({
+			url: 'http://localhost:4100/statuses/'+ _id,
+			dataType: 'json',
+			type: 'PUT',
+		    contentType: "application/json; charset=utf-8",
+			data: JSON.stringify({ status: { likes_count: 1} }),
+			success: function (res) {
+				getStatuses();
+			}
+		});
+	});
 
 	$('#status_form').on('submit', function (e) {
 		e.preventDefault();
@@ -53,16 +71,14 @@ $(document).ready(function () {
 		});
 	});
 
-	$('#username_form').on('submit', function (e) {
+	var $username = $('input[name="username"]');
+	$username.on('change', function (e) {
 		e.preventDefault();
-
-		var $username = $('input[name="username"]');
 
 		if ($username.val().length < 1) {
 			return alert('your username can not be empty');
 		}
 
 		username = $username.val();
-		$username.val("");
 	});
 });
