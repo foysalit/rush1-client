@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Rush One</title>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+	<div id="app">
+		<form action="#" id="username_form">
+			<div class="form-row">
+				<input 
+					type="text" 
+					name="username" 
+					placeholder="what's your alias 007?"/>
+					
+				<button>Set Username</button>
+			</div>
+		</form>
+
+		<form action="#" id="status_form">
+			<div class="form-row">
+				<textarea 
+					name="content" 
+					rows="4"
+					placeholder="tell me what your heart desires...."></textarea>
+			</div>
+			<button>Post Status</button>
+		</form>
+		<div id="status_container"></div>
+	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="index.js"></script>
+</body>
+</html>
